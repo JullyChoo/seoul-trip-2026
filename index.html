@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>朱朱首爾 6天5夜旅行書</title>
+  <style>
+    :root {
+      --bg: #fff8f2;
+      --card: #ffffff;
+      --ink: #2d2420;
+      --muted: #7d6f68;
+      --accent: #e86f4d;
+      --accent2: #ffbd8a;
+      --soft: #ffe5d4;
+      --line: #f0d7c8;
+      --shadow: 0 10px 28px rgba(77, 43, 20, .10);
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans TC", "PingFang TC", sans-serif;
+      background: linear-gradient(180deg, #fff1e7 0%, var(--bg) 24%, #fff 100%);
+      color: var(--ink);
+      padding-bottom: 86px;
+    }
+    header {
+      padding: 28px 18px 18px;
+      background:
+        radial-gradient(circle at 90% 10%, rgba(255,189,138,.55), transparent 38%),
+        linear-gradient(135deg, #ffdfcb 0%, #fff7ef 68%);
+      border-bottom-left-radius: 28px;
+      border-bottom-right-radius: 28px;
+      box-shadow: var(--shadow);
+    }
+    .eyebrow { font-size: 13px; color: var(--muted); letter-spacing: .08em; }
+    h1 { margin: 8px 0 8px; font-size: 30px; line-height: 1.15; }
+    .subtitle { color: var(--muted); font-size: 15px; line-height: 1.65; }
+    .chips { display: flex; gap: 8px; overflow-x: auto; padding: 14px 0 0; }
+    .chip { white-space: nowrap; background: rgba(255,255,255,.8); border: 1px solid var(--line); padding: 8px 11px; border-radius: 999px; font-size: 13px; }
+    main { padding: 16px; max-width: 760px; margin: 0 auto; }
+    section { display: none; animation: fade .18s ease-out; }
+    section.active { display: block; }
+    @keyframes fade { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: translateY(0); } }
+    .card {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 22px;
+      padding: 16px;
+      margin: 14px 0;
+      box-shadow: var(--shadow);
+    }
+    .day-title { display: flex; gap: 10px; align-items: flex-start; justify-content: space-between; }
+    h2 { margin: 0; font-size: 21px; }
+    h3 { margin: 6px 0 10px; font-size: 16px; color: var(--accent); }
+    .theme { color: var(--muted); margin-top: 4px; font-size: 14px; }
+    .tag { background: var(--soft); color: #9b3f29; border-radius: 999px; padding: 6px 10px; font-size: 12px; white-space: nowrap; }
+    .timeline { margin-top: 14px; border-left: 2px solid var(--soft); padding-left: 12px; }
+    .stop { position: relative; padding: 0 0 16px 0; }
+    .stop::before { content: ""; position: absolute; left: -18px; top: 4px; width: 10px; height: 10px; background: var(--accent); border-radius: 50%; box-shadow: 0 0 0 4px #fff3eb; }
+    .time { font-weight: 800; color: #bc553a; font-size: 13px; margin-bottom: 3px; }
+    .place { font-weight: 800; font-size: 16px; }
+    .desc { color: var(--muted); font-size: 14px; line-height: 1.55; margin: 4px 0 9px; }
+    a.mapbtn, button.primary {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      text-decoration: none;
+      color: white;
+      background: linear-gradient(135deg, var(--accent), #f39a62);
+      border: 0;
+      border-radius: 999px;
+      padding: 9px 12px;
+      font-weight: 700;
+      font-size: 13px;
+      box-shadow: 0 6px 16px rgba(232,111,77,.22);
+      cursor: pointer;
+    }
+    .backup {
+      margin-top: 10px;
+      padding: 12px;
+      background: #fff8f4;
+      border: 1px dashed var(--line);
+      border-radius: 16px;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.7;
+    }
+    .budget { margin-top: 10px; font-weight: 800; color: #6a473a; }
+    .grid { display: grid; grid-template-columns: 1fr; gap: 12px; }
+    .mini { padding: 13px; border-radius: 18px; border: 1px solid var(--line); background: white; box-shadow: 0 4px 14px rgba(77,43,20,.06); }
+    .mini b { display: block; margin-bottom: 4px; }
+    .mini p { margin: 0 0 8px; color: var(--muted); font-size: 13px; line-height: 1.55; }
+    .nav {
+      position: fixed;
+      left: 0; right: 0; bottom: 0;
+      background: rgba(255,255,255,.94);
+      backdrop-filter: blur(14px);
+      border-top: 1px solid var(--line);
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      padding: 8px 6px calc(8px + env(safe-area-inset-bottom));
+      z-index: 10;
+    }
+    .nav button {
+      border: 0;
+      background: transparent;
+      color: var(--muted);
+      font-size: 11px;
+      padding: 6px 2px;
+      border-radius: 14px;
+      cursor: pointer;
+    }
+    .nav button.active { background: var(--soft); color: var(--accent); font-weight: 800; }
+    .icon { display: block; font-size: 19px; margin-bottom: 2px; }
+    .quicktabs { display: flex; gap: 8px; overflow-x: auto; padding: 4px 0 12px; position: sticky; top: 0; background: linear-gradient(180deg, var(--bg), rgba(255,248,242,.9)); z-index: 5; }
+    .quicktabs button { border: 1px solid var(--line); background: white; border-radius: 999px; padding: 9px 12px; white-space: nowrap; color: var(--muted); }
+    .quicktabs button.on { background: var(--accent); color: white; }
+    ul { padding-left: 20px; color: var(--muted); line-height: 1.75; }
+    .note { font-size: 13px; color: var(--muted); line-height: 1.6; }
+    .hotel { font-size: 14px; line-height: 1.7; }
+    .money { display: grid; gap: 10px; }
+    .moneyrow { display: flex; justify-content: space-between; gap: 10px; border-bottom: 1px solid #f3e1d6; padding-bottom: 8px; }
+    @media (min-width: 680px) {
+      .grid { grid-template-columns: 1fr 1fr; }
+      header { max-width: 760px; margin: 0 auto; }
+    }
+  </style>
+</head>
+<body>
+<header>
+  <div class="eyebrow">SEOUL 6D5N · 06/08–06/13</div>
+  <h1>朱朱首爾<br>6天5夜旅行書</h1>
+  <div class="subtitle">情侶旅行｜購物 50%・景點 30%・美食 20%｜每日 10–11 點舒服出發</div>
+  <div class="chips">
+    <div class="chip">🏨 G3 Hotel Chungmuro</div>
+    <div class="chip">🎨 Leeum</div>
+    <div class="chip">🛍 漢南洞重點</div>
+    <div class="chip">♨️ SPAREX</div>
+    <div class="chip">🌃 南山夜景</div>
+  </div>
+</header>
+
+<main>
+  <section id="itinerary" class="active">
+    <div class="quicktabs" id="dayTabs"></div>
+    <div id="dayCards"></div>
+  </section>
+
+  <section id="transport">
+    <div class="card">
+      <h2>🚇 交通總覽</h2>
+      <p class="note">以大眾運輸為主，必要時搭計程車。購物日若戰利品多，建議改搭計程車，體力比省錢重要。</p>
+      <div class="grid">
+        <div class="mini"><b>仁川機場 → 忠武路</b><p>AREX／機場巴士＋地鐵，約 75–95 分鐘；晚到且累可直接計程車。</p><a class="mapbtn" href="https://www.google.com/maps/search/?api=1&query=Incheon+International+Airport+Terminal+1+to+G3+Hotel+Chungmuro" target="_blank">開導航</a></div>
+        <div class="mini"><b>忠武路 → 聖水</b><p>約 25–30 分鐘。Day 2 建議 10:00 出發。</p><a class="mapbtn" href="https://www.google.com/maps/search/?api=1&query=G3+Hotel+Chungmuro+to+Seongsu-dong" target="_blank">開導航</a></div>
+        <div class="mini"><b>忠武路 → 景福宮</b><p>約 20 分鐘。景福宮週二公休，已排週三。</p><a class="mapbtn" href="https://www.google.com/maps/search/?api=1&query=G3+Hotel+Chungmuro+to+Gyeongbokgung+Palace" target="_blank">開導航</a></div>
+        <div class="mini"><b>忠武路 → 漢南洞／Leeum</b><p>約 15–20 分鐘。Day 4 是漢南洞重點日。</p><a class="mapbtn" href="https://www.google.com/maps/search/?api=1&query=G3+Hotel+Chungmuro+to+Leeum+Museum+of+Art" target="_blank">開導航</a></div>
+        <div class="mini"><b>COEX → 東大門 SPAREX</b><p>約 25–35 分鐘。汗蒸幕後計程車回飯店約 10 分鐘。</p><a class="mapbtn" href="https://www.google.com/maps/search/?api=1&query=Starfield+COEX+Mall+to+SPAREX+GoodMorning+City+Seoul" target="_blank">開導航</a></div>
+      </div>
+    </div>
+    <div class="card">
+      <h2>📱 必裝 App</h2>
+      <ul>
+        <li>Naver Map：韓國導航主力。</li>
+        <li>Kakao T：叫計程車。</li>
+        <li>Papago：韓文翻譯。</li>
+        <li>WOWPASS／T-money：交通與小額支付。</li>
+      </ul>
+    </div>
+  </section>
+
+  <section id="hotel">
+    <div class="card">
+      <h2>🏨 住宿資訊</h2>
+      <div class="hotel">
+        <b>G3 Hotel Chungmuro</b><br>
+        地址：7 Chungmu-ro, Jung-gu, Seoul<br>
+        入住：06/08（一）15:00 後｜退房：06/13（六）11:00 前<br>
+        位置優勢：近忠武路、明洞、東大門；去 Leeum、景福宮、聖水都順。
+      </div>
+      <br>
+      <a class="mapbtn" href="https://www.google.com/maps/search/?api=1&query=G3+Hotel+Chungmuro+Seoul" target="_blank">開飯店導航</a>
+    </div>
+    <div class="card">
+      <h2>🧾 住宿小提醒</h2>
+      <ul>
+        <li>第一晚抵達晚，不排正式景點。</li>
+        <li>Day 3 南山塔前可回飯店休息與放戰利品。</li>
+        <li>Day 6 建議 10:00 退房出發，11:15 前抵達仁川機場。</li>
+      </ul>
+    </div>
+  </section>
+
+  <section id="packing">
+    <div class="card">
+      <h2>🧳 行前準備／行李清單</h2>
+      <div class="grid">
+        <div class="mini"><b>證件票券</b><p>護照、機票、訂房確認、旅平險、信用卡、現金韓元。</p></div>
+        <div class="mini"><b>網路交通</b><p>eSIM／Wi-Fi、T-money 或 WOWPASS、Naver Map、Kakao T。</p></div>
+        <div class="mini"><b>穿搭</b><p>短袖、薄外套、好走球鞋、摺疊傘。6 月可能悶熱或下雨。</p></div>
+        <div class="mini"><b>汗蒸幕小包</b><p>髮圈、保養品、隱形眼鏡盒、乾淨襪子、小毛巾。</p></div>
+        <div class="mini"><b>購物</b><p>可折疊托特包、行李秤、退稅用護照、戰利品分裝袋。</p></div>
+        <div class="mini"><b>藥品</b><p>腸胃藥、止痛藥、OK 繃、防磨腳貼、個人常備藥。</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="budget">
+    <div class="card">
+      <h2>💰 預算估算</h2>
+      <p class="note">不含購物，兩人以舒服體驗為主；高級餐與計程車使用量會影響實際花費。</p>
+      <div class="money">
+        <div class="moneyrow"><b>Day 1 抵達</b><span>₩35,000–50,000／人</span></div>
+        <div class="moneyrow"><b>Day 2 聖水</b><span>₩90,000–160,000／人</span></div>
+        <div class="moneyrow"><b>Day 3 景福宮＋南山</b><span>₩90,000–150,000／人</span></div>
+        <div class="moneyrow"><b>Day 4 Leeum＋漢南</b><span>₩130,000–240,000／人</span></div>
+        <div class="moneyrow"><b>Day 5 購物＋SPAREX</b><span>₩140,000–250,000／人</span></div>
+        <div class="moneyrow"><b>Day 6 機場</b><span>₩25,000–45,000／人</span></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>⭐ 備選名單</h2>
+      <h3>美食／咖啡</h3>
+      <div class="grid">
+        <div class="mini"><b>陳玉華奶奶元祖一隻雞</b><p>東大門站 9 號出口，雞湯名店，適合 Day 5 晚餐備選</p><a class="mapbtn" href="https://www.google.com/maps/search/?api=1&query=Jin+Ok+Hwa+Original+Chicken+Restaurant+Seoul" target="_blank">開地圖</a></div><div class="mini"><b>西村北村</b><p>景福宮站 3 號出口，烤牛肉餅＋冷麵</p><a class="mapbtn" href="https://www.google.com/maps/search/?api=1&query=Seochon+Bukchon+Seoul+restaurant" target="_blank">開地圖</a></div><div class="mini"><b>文化社 乙支路店</b><p>乙支路三街站，日式鬆餅，適合第一晚或明洞附近備選</p><a class="mapbtn" href="https://www.google.com/maps/search/?api=1&query=Bunkasha+Euljiro+Seoul" target="_blank">開地圖</a></div><div class="mini"><b>鐘路菜包肉 將軍蛤蠣菜包肉</b><p>鐘路三街站，豬腳包生菜＋海鮮煎餅</p><a class="mapbtn" href="https://www.google.com/maps/search/?api=1&query=Jongno+Bossam+Janggun+Gulbossam+Seoul" target="_blank">開地圖</a></div><div class="mini"><b>文化食堂</b><p>聖水餐酒館，招牌三合義大利麵、蛋包飯</p><a class="mapbtn" href="https://www.google.com/maps/search/?api=1&query=Munhwa+Bistro+Seongsu" target="_blank">開地圖</a></div><div class="mini"><b>能洞水芹菜 聖水直營店</b><p>聖水，生牛肉拌飯必吃</p><a class="mapbtn" href="https://www.google.com/maps/search/?api=1&query=Neungdong+Minari+Seongsu" target="_blank">開地圖</a></div><div class="mini"><b>一味樂</b><p>纛島站，高 CP 值燒肉，建議加水冷麵</p><a class="mapbtn" href="https://www.google.com/maps/search/?api=1&query=Ilmirak+Seongsu+Seoul" target="_blank">開地圖</a></div><div class="mini"><b>Growers</b><p>延禧洞早午餐，培根法國吐司、北非蛋</p><a class="mapbtn" href="https://www.google.com/maps/search/?api=1&query=Growers+Yeonhui+Seoul" target="_blank">開地圖</a></div><div class="mini"><b>Tuk Tuk Noodle Thai</b><p>弘大周邊米其林泰式</p><a class="mapbtn" href="https://www.google.com/maps/search/?api=1&query=Tuk+Tuk+Noodle+Thai+Seoul" target="_blank">開地圖</a></div><div class="mini"><b>Osulloc Tea House 漢南店</b><p>Leeum 旁，濟州茶品牌</p><a class="mapbtn" href="https://www.google.com/maps/search/?api=1&query=Osulloc+Tea+House+Hannam" target="_blank">開地圖</a></div><div class="mini"><b>Rika by Paprika</b><p>漢南洞酸種麵包早午餐</p><a class="mapbtn" href="https://www.google.com/maps/search/?api=1&query=Rika+by+Paprika+Hannam" target="_blank">開地圖</a></div>
+      </div>
+      <h3>購物／選物</h3>
+      <div class="grid">
+        <div class="mini"><b>ONE MORE BAG</b><p>景福宮附近文具雜貨店</p><a class="mapbtn" href="https://www.google.com/maps/search/?api=1&query=One+More+Bag+Seoul" target="_blank">開地圖</a></div><div class="mini"><b>Dancing Grandma</b><p>西村鉤織、編織作品店</p><a class="mapbtn" href="https://www.google.com/maps/search/?api=1&query=Dancing+Grandma+Seoul" target="_blank">開地圖</a></div><div class="mini"><b>POINT OF VIEW</b><p>聖水歐系文具選品店，必逛</p><a class="mapbtn" href="https://www.google.com/maps/search/?api=1&query=Point+of+View+Seongsu" target="_blank">開地圖</a></div><div class="mini"><b>Kiosk Kiosk</b><p>首爾林附近多品牌選品店</p><a class="mapbtn" href="https://www.google.com/maps/search/?api=1&query=Kiosk+Kiosk+Seoul" target="_blank">開地圖</a></div><div class="mini"><b>The Hyundai Seoul</b><p>汝矣島大型百貨，品牌一次補齊</p><a class="mapbtn" href="https://www.google.com/maps/search/?api=1&query=The+Hyundai+Seoul" target="_blank">開地圖</a></div><div class="mini"><b>Object. 西教店</b><p>弘大文創雜貨首選</p><a class="mapbtn" href="https://www.google.com/maps/search/?api=1&query=Object+Seogyo+Seoul" target="_blank">開地圖</a></div><div class="mini"><b>Sinon Shop</b><p>解放村／漢南洞餐具家居選品</p><a class="mapbtn" href="https://www.google.com/maps/search/?api=1&query=Sinon+Shop+Seoul" target="_blank">開地圖</a></div><div class="mini"><b>NYU NYU 明洞店</b><p>明洞大型飾品雜貨店</p><a class="mapbtn" href="https://www.google.com/maps/search/?api=1&query=NYU+NYU+Myeongdong" target="_blank">開地圖</a></div><div class="mini"><b>melahome</b><p>延禧洞家居餐具選品</p><a class="mapbtn" href="https://www.google.com/maps/search/?api=1&query=melahome+Seoul" target="_blank">開地圖</a></div><div class="mini"><b>t.t.a</b><p>延禧洞餐具家居選品</p><a class="mapbtn" href="https://www.google.com/maps/search/?api=1&query=tta+Seoul+Yeonhui" target="_blank">開地圖</a></div>
+      </div>
+      <h3>藝文備選</h3>
+      <div class="grid">
+        <div class="mini"><b>Leeum Museum of Art</b><p>漢南洞三星美術館，必去</p><a class="mapbtn" href="https://www.google.com/maps/search/?api=1&query=Leeum+Museum+of+Art+Seoul" target="_blank">開地圖</a></div><div class="mini"><b>MMCA Seoul</b><p>安國附近國立現代美術館首爾館</p><a class="mapbtn" href="https://www.google.com/maps/search/?api=1&query=MMCA+Seoul" target="_blank">開地圖</a></div><div class="mini"><b>Kukje Gallery</b><p>安國頂級當代畫廊，免費參觀</p><a class="mapbtn" href="https://www.google.com/maps/search/?api=1&query=Kukje+Gallery+Seoul" target="_blank">開地圖</a></div><div class="mini"><b>Arario Museum in Space</b><p>安國附近美術館，週一休</p><a class="mapbtn" href="https://www.google.com/maps/search/?api=1&query=Arario+Museum+in+Space+Seoul" target="_blank">開地圖</a></div><div class="mini"><b>D Museum</b><p>首爾林附近，適合聖水日備選</p><a class="mapbtn" href="https://www.google.com/maps/search/?api=1&query=D+Museum+Seoul" target="_blank">開地圖</a></div><div class="mini"><b>SongEun Art Center</b><p>狎鷗亭 Rodeo 附近藝文備選</p><a class="mapbtn" href="https://www.google.com/maps/search/?api=1&query=SongEun+Art+Center+Seoul" target="_blank">開地圖</a></div><div class="mini"><b>SeMA 西小門本館</b><p>市廳附近首爾市立美術館</p><a class="mapbtn" href="https://www.google.com/maps/search/?api=1&query=Seoul+Museum+of+Art+Seosomun" target="_blank">開地圖</a></div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<nav class="nav">
+  <button class="active" data-section="itinerary"><span class="icon">📅</span>每日行程</button>
+  <button data-section="transport"><span class="icon">🚇</span>交通</button>
+  <button data-section="hotel"><span class="icon">🏨</span>住宿</button>
+  <button data-section="packing"><span class="icon">🧳</span>行李</button>
+  <button data-section="budget"><span class="icon">💰</span>預算</button>
+</nav>
+
+<script>
+const days = [{"id": "day1", "title": "Day 1｜6/8（一）抵達首爾", "theme": "入住忠武路・輕鬆補給", "items": [["17:00–20:45", "台中清泉岡 → 首爾仁川", "威德航空，抵達後辦理入境、領行李。", "https://www.google.com/maps/search/?api=1&query=Incheon+International+Airport+Terminal+1"], ["21:30–23:00", "仁川機場 → G3 Hotel Chungmuro", "建議 AREX／機場巴士＋地鐵，若疲累可直接計程車。", "https://www.google.com/maps/search/?api=1&query=G3+Hotel+Chungmuro+Seoul"], ["23:00–23:40", "入住、便利商店補水與宵夜", "第一晚不排正式景點，保留體力。", "https://www.google.com/maps/search/?api=1&query=G3+Hotel+Chungmuro+convenience+store"]], "backup": ["明洞夜逛", "乙支路散步", "Coffee Hanyakbang 備選"], "budget": "約 ₩35,000–50,000／人（交通＋宵夜）"}, {"id": "day2", "title": "Day 2｜6/9（二）聖水洞整天", "theme": "設計選物・潮流品牌・咖啡甜點", "items": [["10:00", "從 G3 Hotel Chungmuro 出發", "地鐵前往聖水，約 25–30 分鐘。", "https://www.google.com/maps/search/?api=1&query=Seongsu-dong+Seoul"], ["10:40–12:30", "聖水洞咖啡／早午餐＋散步", "可先找咖啡廳坐下，再慢慢逛街。", "https://www.google.com/maps/search/?api=1&query=Seongsu-dong+cafes"], ["12:30–14:00", "午餐：文化食堂／能洞水芹菜", "文化食堂偏西式餐酒館；能洞水芹菜可吃生牛肉拌飯。", "https://www.google.com/maps/search/?api=1&query=Munhwa+Bistro+Seongsu+Seoul"], ["14:00–17:30", "Musinsa・Matin Kim・Tamburins・POINT OF VIEW", "這天是設計與購物重點日，POINT OF VIEW 建議保留時間慢逛。", "https://www.google.com/maps/search/?api=1&query=Point+of+View+Seongsu+Seoul"], ["17:30–18:30", "甜點：Gelateria Artigianale", "聖水 Gelato 備選，可作為下午休息點。", "https://www.google.com/maps/search/?api=1&query=Gelateria+Artigianale+Seongsu"], ["18:30–20:30", "晚餐：一味樂韓牛燒肉／回明洞用餐", "一味樂為高 CP 值燒肉備選；累了可回飯店附近吃。", "https://www.google.com/maps/search/?api=1&query=Ilmirak+Seongsu+Seoul"]], "backup": ["Kiosk Kiosk", "D Museum", "朝朝刀削麵", "AMORE Seongsu", "首爾林散步"], "budget": "約 ₩90,000–160,000／人（不含購物）"}, {"id": "day3", "title": "Day 3｜6/10（三）景福宮・北村・南山夜景", "theme": "經典首爾景點＋夜景散步", "items": [["10:00", "從飯店出發", "忠武路 → 景福宮，約 20 分鐘。", "https://www.google.com/maps/search/?api=1&query=Gyeongbokgung+Palace+Seoul"], ["10:30–12:00", "景福宮", "週二公休，已避開；週三可正常安排。", "https://www.google.com/maps/search/?api=1&query=Gyeongbokgung+Palace+Seoul"], ["12:00–13:30", "London Bagel Museum／安國午餐", "排隊可能久，建議當作備案，不要當唯一選擇。", "https://www.google.com/maps/search/?api=1&query=London+Bagel+Museum+Anguk+Seoul"], ["13:30–15:00", "北村韓屋村", "保留 60–90 分鐘即可，避免天熱走太累。", "https://www.google.com/maps/search/?api=1&query=Bukchon+Hanok+Village+Seoul"], ["15:00–17:00", "MMCA 首爾館／Kukje Gallery／西村選物", "三選一或二，依當天體力調整。", "https://www.google.com/maps/search/?api=1&query=MMCA+Seoul"], ["17:00–18:20", "回飯店休息、放戰利品", "南山塔前先休息，晚上體驗比較舒服。", "https://www.google.com/maps/search/?api=1&query=G3+Hotel+Chungmuro+Seoul"], ["18:30–20:30", "南山首爾塔夜景", "建議纜車上山，可不上觀景台，只看免費夜景也很美。", "https://www.google.com/maps/search/?api=1&query=N+Seoul+Tower"], ["20:45–22:00", "明洞晚餐＋夜逛", "回忠武路很近，適合順便 Olive Young 補貨。", "https://www.google.com/maps/search/?api=1&query=Myeongdong+Seoul"]], "backup": ["NAMUSAIRO Coffee", "FOLKI", "ONE MORE BAG", "Dancing Grandma", "大林美術館"], "budget": "約 ₩90,000–150,000／人"}, {"id": "day4", "title": "Day 4｜6/11（四）Leeum・漢南洞", "theme": "三星美術館＋漢南洞重點購物", "items": [["10:30", "從飯店出發", "忠武路 → 漢江鎮／漢南洞，約 15–20 分鐘。", "https://www.google.com/maps/search/?api=1&query=Hannam-dong+Seoul"], ["11:00–12:00", "Rika by Paprika 早午餐", "酸種麵包、抹醬、早午餐備選。", "https://www.google.com/maps/search/?api=1&query=Rika+by+Paprika+Hannam+Seoul"], ["12:00–14:00", "Leeum Museum of Art", "週一公休，週四可安排；建議事先確認展覽與預約。", "https://www.google.com/maps/search/?api=1&query=Leeum+Museum+of+Art+Seoul"], ["14:00–14:50", "Osulloc Tea House 漢南店", "Leeum 旁邊，適合喝茶休息。", "https://www.google.com/maps/search/?api=1&query=Osulloc+Tea+House+Hannam+Seoul"], ["15:00–19:00", "漢南洞自由購物", "Sounds Hannam、Mardi Mercredi、Post Poetics、Nonfiction、Tamburins、AMUSE。", "https://www.google.com/maps/search/?api=1&query=Sounds+Hannam+Seoul"], ["19:30–21:00", "晚餐：醬蟹／韓牛擇一", "推薦 Jinmi Sikdang 醬蟹；若想高級韓牛可改 Born & Bred。", "https://www.google.com/maps/search/?api=1&query=Jinmi+Sikdang+Seoul"]], "backup": ["Sinon Shop", "Bagetti", "HILLS & EUROPA", "Maison Margiela Flagship", "解放村散步"], "budget": "約 ₩130,000–240,000／人"}, {"id": "day5", "title": "Day 5｜6/12（五）The Hyundai・狎鷗亭・COEX・SPAREX", "theme": "購物終極日＋東大門汗蒸幕", "items": [["10:00", "從飯店出發", "前往汝矣島 The Hyundai Seoul，約 35–45 分鐘。", "https://www.google.com/maps/search/?api=1&query=The+Hyundai+Seoul"], ["10:30–14:30", "The Hyundai Seoul", "大型百貨購物日，Mardi、Matin Kim、emis、Stand Oil 等一次補齊。", "https://www.google.com/maps/search/?api=1&query=The+Hyundai+Seoul"], ["14:30–15:10", "移動到狎鷗亭 Rodeo", "建議計程車或地鐵，視戰利品重量決定。", "https://www.google.com/maps/search/?api=1&query=Apgujeong+Rodeo+Street+Seoul"], ["15:10–17:40", "狎鷗亭 Rodeo／島山公園", "新沙林蔭大道列備選，時間不夠可略過。", "https://www.google.com/maps/search/?api=1&query=Apgujeong+Rodeo+Street+Seoul"], ["17:40–18:20", "前往 COEX", "地鐵或計程車約 20–30 分鐘。", "https://www.google.com/maps/search/?api=1&query=Starfield+COEX+Mall+Seoul"], ["18:20–20:00", "Starfield COEX Mall・星空圖書館", "拍照＋最後補貨。", "https://www.google.com/maps/search/?api=1&query=Starfield+Library+COEX"], ["20:00–20:40", "前往東大門", "COEX → 東大門約 25–35 分鐘。", "https://www.google.com/maps/search/?api=1&query=Dongdaemun+Design+Plaza"], ["20:40–22:50", "SPAREX 東大門 Good Morning City 汗蒸幕", "最後一晚舒緩走路疲勞，結束後計程車回飯店約 10 分鐘。", "https://www.google.com/maps/search/?api=1&query=SPAREX+Jjimjilbang+GoodMorning+City+Seoul"]], "backup": ["新沙洞林蔭大道", "DDP 夜景", "陳玉華奶奶一隻雞", "將軍蛤蠣菜包肉", "NYU NYU 明洞店"], "budget": "約 ₩140,000–250,000／人"}, {"id": "day6", "title": "Day 6｜6/13（六）退房・回台灣", "theme": "機場日，不排景點", "items": [["08:30–09:30", "起床、早餐、整理行李", "確認退稅文件、護照、戰利品分裝。", "https://www.google.com/maps/search/?api=1&query=G3+Hotel+Chungmuro+Seoul"], ["10:00", "退房出發前往仁川機場", "建議 11:15 前抵達仁川機場。", "https://www.google.com/maps/search/?api=1&query=Incheon+International+Airport+Terminal+1"], ["13:55", "仁川 → 台中清泉岡", "國際線請預留報到、安檢、退稅時間。", "https://www.google.com/maps/search/?api=1&query=Incheon+International+Airport+Terminal+1"]], "backup": ["飯店附近咖啡外帶", "機場免稅店", "機場退稅"], "budget": "約 ₩25,000–45,000／人"}];
+
+function renderDayTabs() {
+  const tabs = document.getElementById('dayTabs');
+  tabs.innerHTML = days.map((d, i) => `<button class="${i===0?'on':''}" data-day="${d.id}">Day ${i+1}</button>`).join('');
+  tabs.querySelectorAll('button').forEach(btn => {
+    btn.addEventListener('click', () => {
+      tabs.querySelectorAll('button').forEach(b => b.classList.remove('on'));
+      btn.classList.add('on');
+      renderDay(btn.dataset.day);
+    });
+  });
+}
+
+function renderDay(id) {
+  const d = days.find(x => x.id === id) || days[0];
+  const box = document.getElementById('dayCards');
+  box.innerHTML = `
+    <div class="card">
+      <div class="day-title">
+        <div>
+          <h2>${d.title}</h2>
+          <div class="theme">${d.theme}</div>
+        </div>
+        <div class="tag">10–11點出發</div>
+      </div>
+      <div class="timeline">
+        ${d.items.map(item => `
+          <div class="stop">
+            <div class="time">${item[0]}</div>
+            <div class="place">${item[1]}</div>
+            <div class="desc">${item[2]}</div>
+            <a class="mapbtn" href="${item[3]}" target="_blank" rel="noopener">📍 Google Maps</a>
+          </div>
+        `).join('')}
+      </div>
+      <div class="backup"><b>同區備選：</b>${d.backup.join('・')}</div>
+      <div class="budget">每日預估：${d.budget}</div>
+    </div>
+  `;
+}
+
+document.querySelectorAll('.nav button').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.nav button').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    document.querySelectorAll('main section').forEach(sec => sec.classList.remove('active'));
+    document.getElementById(btn.dataset.section).classList.add('active');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+});
+
+renderDayTabs();
+renderDay('day1');
+</script>
+</body>
+</html>
